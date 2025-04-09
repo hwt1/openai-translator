@@ -1,9 +1,11 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="!isFullPage">
     <h1>{{ message }}</h1>
-    <button @click="fetchData">获取数据</button>
+    <el-button type="primary" @click="fetchData">获取数据</el-button>
+    <el-button type="primary" @click="toPage">页面跳转</el-button>
     <p v-if="data">{{ data }}</p>
   </div>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -15,6 +17,11 @@ export default {
       data: null
     };
   },
+  computed: {
+    isFullPage() {
+      return this.$route.meta.fullPage;
+    }
+  },
   methods: {
     async fetchData() {
       try {
@@ -24,18 +31,10 @@ export default {
       } catch (error) {
         console.error('请求出错:', error);
       }
+    },
+    toPage(){
+      this.$router.push('/translate');
     }
   }
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

@@ -1,6 +1,7 @@
 from typing import Optional
 
 import pdfplumber
+from werkzeug.datastructures import FileStorage
 
 from book.book import Book
 from book.content import Content, ContentType, TableContent
@@ -11,11 +12,11 @@ from utils.logger import LOG
 
 class PDFParser:
     # 解析pdf文件，将pdf文件封装成 book对象
-    def parse_pdf(self,pdf_file_path:str,handle_pages:Optional[int] = None):
+    def parse_pdf(self,pdf_file_path:Optional[str]=None,pdf_file:Optional[FileStorage]=None,handle_pages:Optional[int] = None):
         book = Book(pdf_file_path)
 
         # 读取 pdf文件
-        with pdfplumber.open(pdf_file_path) as pdf:
+        with pdfplumber.open(pdf_file_path if pdf_file_path else pdf_file) as pdf:
             if handle_pages is not None and handle_pages > len(pdf.pages):
                 raise PageOutOfRangeException(len(pdf.pages),handle_pages)
 
