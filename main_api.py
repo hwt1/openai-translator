@@ -2,6 +2,7 @@
 import os
 import sys
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from model.openai_model import OpenAIModel
 from translator.pdf_translator import PDFTranslator
@@ -13,7 +14,16 @@ sys.path.insert(0,project_root)
 # 封装API方法
 app = Flask(__name__)
 
+# 添加跨域处理
+CORS(app)
+
 # 定义API路由
+# 测试请求
+@app.route('/api/data',methods=['get'])
+def test_data():
+    result = "request success"
+    return jsonify({"result":result})
+
 @app.route('/translate',methods=['POST'])
 def translate_api():
     # 获取请求中的 JSON数据
