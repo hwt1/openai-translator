@@ -32,6 +32,13 @@
 7、在 ReportLab 这个强大的 Python 库中，pdfmetrics 是其内部的一个重要模块。
 ReportLab 主要用于创建 PDF 文档，pdfmetrics 模块则在字体管理和度量方面发挥着关键作用。
 
+8、Flask 是一个轻量级的 Web 框架，用于搭建简单的API服务
+````
+在 main_api.py文件中定义 api服务，通过 pycharm的debugger或者非debugger模式启动项目，
+通过在 postman发起如下请求来访问
+![img.png](img.png)
+````
+
 **三、新知识点**
 1、为什么使用 yield关键字
 * 原理：当使用 yield 时，函数会变成一个生成器（generator）。生成器是一种特殊的迭代器，它采用惰性求值（lazy evaluation）的方式工作。这意味着它不会一次性生成所有结果并存储在内存中，而是在每次调用时才生成一个结果。对于处理大规模数据或无限序列时，这种方式能显著减少内存占用。
