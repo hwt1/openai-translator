@@ -150,6 +150,7 @@ export default {
       formData.append('modelName', this.form.modelName);
       formData.append('fileFormat', this.form.fileFormat);
       formData.append('file', this.form.file);
+      formData.append('targetLanguage', this.form.targetLanguage);
 
       try {
         this.loading = true;
@@ -199,7 +200,6 @@ export default {
 #translate-page {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;  /* 水平居中 */

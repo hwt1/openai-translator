@@ -5,7 +5,7 @@ import openai
 from openai import OpenAI
 
 from model.model import Model
-from utils.config_loader import ConfigLoader
+from utils.config_loader import configYaml
 from utils.logger import LOG
 
 
@@ -16,10 +16,8 @@ class OpenAIModel(Model):
             self.api_key = api_key
             self.base_url = base_url
         else:
-            config_loader = ConfigLoader('config.yaml')
-            config = config_loader.load_config()
-            self.api_key = config['OpenAIModel']['api_key']
-            self.base_url = config['OpenAIModel']['base_url']
+            self.api_key = configYaml['OpenAIModel']['api_key']
+            self.base_url = configYaml['OpenAIModel']['base_url']
         self.client = OpenAI(
             api_key = self.api_key,
             base_url = self.base_url

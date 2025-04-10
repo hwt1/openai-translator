@@ -8,3 +8,4 @@ common:
   file_format: "markdown"
 
 UIBaseUrl: http://localhost:8080/ # 前端路径
+defaultTargetLanguage: "中文"
