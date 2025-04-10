@@ -1,3 +1,9 @@
+项目启动说明：
+
+1、python项目在 main_api.py文件中启动
+
+2、vue项目在 translation-ui目录下启动 执行 npm run serve
+
 **一、项目分为几个模块：**
 
 1、pdf解析模块——用于获取原文
