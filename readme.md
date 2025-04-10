@@ -4,13 +4,25 @@
 
 2、vue项目在 translation-ui目录下启动 执行 npm run serve
 
+3、项目启动后：
+* 前端路径：http://localhost:8080
+* 后端路径：http://localhost:5000
+* 通过前端路径进入翻译页面
+
 项目说明：
 * 支持图形用户界面（GUI），提升易用性。
 * 服务化：以 API 形式提供翻译服务支持。
 * 添加对其他语言的支持。
 * 添加对保留源 PDF 的原始布局的支持——待处理
+![img_2.png](imgs/img_2.png)
 
-**一、项目分为几个模块：**
+**一、框架说明**
+
+1、前端框架：vue3.0 + elementPlus
+
+2、后端：python + flask
+
+**二、项目分为几个模块：**
 
 1、pdf解析模块——用于获取原文
 
@@ -25,7 +37,7 @@
 6、logger日志模块——用于记录日志
 
 
-**二、使用的相关依赖包：**
+**三、使用的相关依赖包：**
 
 1、loguru 是 Python 中一个简单且强大的日志记录库，旨在为开发者提供比 Python 内置的 logging 模块更便捷、更具表现力的日志记录解决方案。
 
@@ -45,14 +57,12 @@
 ReportLab 主要用于创建 PDF 文档，pdfmetrics 模块则在字体管理和度量方面发挥着关键作用。
 
 8、Flask 是一个轻量级的 Web 框架，用于搭建简单的API服务
-````
+
 在 main_api.py文件中定义 api服务，通过 pycharm的debugger或者非debugger模式启动项目，
 通过在 postman发起如下请求来访问
-![img.png](img.png)
-````
-**三、前端框架**
+![img.png](imgs/img.png)
 
-1、vue+elementPlus
+
 
 **四、新知识点**
 
