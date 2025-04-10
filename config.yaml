@@ -6,3 +6,5 @@ OpenAIModel:
 common:
   book: "tests/test.pdf"
   file_format: "markdown"
+
+UIBaseUrl: http://localhost:8080/ # 前端路径

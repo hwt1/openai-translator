@@ -1,11 +1,14 @@
 
 import os
 import sys
+import time
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from model.openai_model import OpenAIModel
 from translator.pdf_translator import PDFTranslator
+from utils.config_loader import ConfigLoader
 
 # 获取项目根路径的绝对路径
 project_root =os.path.dirname(os.path.abspath(__file__))
@@ -42,6 +45,7 @@ def translate_api():
 def translate_from_page():
     # 获取 modelName
     model_name = request.form.get('modelName')
+    file_format = request.form.get('fileFormat') if request.form.get('fileFormat') else 'PDF'
 
     # 获取上传的文件
     file = request.files.get('file')
@@ -50,18 +54,33 @@ def translate_from_page():
     # 检查文件类型
     if file.filename.split('.')[-1].lower() !='pdf':
         return jsonify({'error':'只支持上传 PDF文件'}),400
-    # 翻译后文件输出路径
-    output_file_path = f"translated_files/{file.filename.replace(".pdf","_translated.pdf")}"
+
+    save_file_path,ui_file_url=handle_translated_file_path(file.filename,file_format)
 
     model = OpenAIModel(model=model_name)
     # 实例化 PDFTranslator 类，并调用 translate_pdf() 方法
     translator = PDFTranslator(model)
-    result = translator.translate_pdf(pdf_file=file,output_file_path=output_file_path)
+    translator.translate_pdf(pdf_file=file,output_file_path=save_file_path,file_format=file_format)
+
+
     return jsonify({
         'status': 'success',
-        'modelName': model_name,
-        'fileName': file.filename,
-        'result':result
+        'outFileUrl':ui_file_url
     })
+
+# 处理翻译后文件路径
+def handle_translated_file_path(filename:str,file_format:str):
+    # 翻译后文件输出路径
+    timestamp = str(time.time()).replace(".", "")
+    file_suffix = f"_translated_{timestamp}.{'pdf' if file_format.lower() == 'pdf' else 'md'}"
+    translated_file_name = f"{filename.replace('.pdf', file_suffix)}"
+    # 翻译后文件保存路径
+    save_file_path = f"translate-ui/public/translated_files/{translated_file_name}"
+    # 拼接前端访问翻译后的文件链接
+    config_loader = ConfigLoader('config.yaml')
+    config = config_loader.load_config()
+    ui_base_url = config['UIBaseUrl']
+    ui_file_url = f"{ui_base_url}translated_files/{translated_file_name}"
+    return save_file_path,ui_file_url
 if __name__ == '__main__':
     app.run()
